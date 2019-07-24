@@ -1,0 +1,26 @@
+1.  Ќайти все модели со скидкой менее 5.
+Select model from Auto whereId in (Select Auto_Id from Characteristic where Id in 
+(Select Characteristic_Id where discount<5))
+
+
+2.  Ќайти 4 модели самых дорогих  седанов.
+Select top(4) model from Auto join Characteristic on Auto.Id=Auto_Id where cabine='sedan'
+join Showroom on Auto_id=Characteristic_id where price (Select max(price) from Showroom)
+
+
+3.  Ќайти производител€ самого дешевого автомобил€
+Select maker from Auto where id in 
+(Select Auto_id from Characteristic where id in 
+(Select Characteristic_id where price (Select min(price) from Showroom))
+
+
+4.  ѕоказать какие  автомобили  выпускаемые не Volkswagen  есть в наличии.
+Select maker from auto where (not like 'Volkswagen') id in 
+(Select auto_id from Characteristic where id in
+(Select Characteristic_id where presence = 'y'))
+
+
+5.  ¬ывести количество марок автомобилей, со скоростью до 200, страхова€ сумма которых менее 40000
+Select count maker from auto 
+join Characteristic on Auto.id = Auto_id where speed<200
+join Showroom on Characteristic. Auto_id = Characteristic_id where assuranceamount <40000
